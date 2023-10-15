@@ -1,0 +1,97 @@
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+// @import '~bootstrap/scss/bootstrap.scss';
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+// @import "~/bootstrap/scss/bootstrap"; << it's failed
+// Then add additional custom code here
+
+
+.app {
+    width: 100vw;
+    height: 100vh;
+    font-size: 1.5rem;
+    font-weight: 600;
+    overflow: hidden;
+    background-color: $gray-800;
+    color: $gray-400;
+    font-style: italic;
+
+    #title-div {
+        font-size: 3rem;
+        margin: 1rem 0 0 0;
+    }
+
+    #session-label,
+    #break-label {
+        margin: 1rem 0 0 0;
+
+        path {
+            stroke: $gray-300;
+            stroke-width: 2px;
+        }
+    }
+
+    #timer-section {
+
+        margin: 2rem 0 0 0;
+
+        #timer-display {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border: 5px solid $gray-400;
+
+
+            #timer-label {
+                flex: 1 1 0;
+                padding: 4rem 0 0 0;
+                font-size: 2.5rem;
+
+            }
+
+            #time-left {
+                flex: 2 1 0;
+                padding: 0 0 2rem 0;
+                color: $gray-300;
+                font-size: 6rem;
+                font-family: $font-family-monospace;
+            }
+        }
+
+        #timer-control {
+            margin: 2rem 0 0 0;
+        }
+    }
+}
+
+
+.working-border {
+    border-radius: 50%;
+    animation: working 1s;
+}
+
+@keyframes working {
+  0% {
+    border-radius: 10%;
+  }
+  100% {
+    border-radius: 50%;
+  }
+}
+
+.breaking-border {
+    border-radius: 10%;
+    animation: breaking 1s;
+}
+
+@keyframes breaking {
+  0% {
+    border-radius: 50%;
+  }
+  100% {
+    border-radius: 10%;
+  }
+}

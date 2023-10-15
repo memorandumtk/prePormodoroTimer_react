@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./01.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <!-- ^ even after changing jquery version, color changing animation doesn't work. -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+  <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+  <script src="https://kit.fontawesome.com/ae8297218d.js" crossorigin="anonymous"></script>
+  <script src="./01.js"></script>
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
+</head>
+
+<body>
+  <div class="quote-box">
+    <div class="quote-text">
+      <i class="fa fa-quote-left"> </i><span id="text"></span>
+    </div>
+    <div class="quote-author">
+      - <span id="author"></span>
+    </div>
+    <div class="buttons">
+      <a class="button" id="tweet-quote" title="Tweet this quote!" target="_blank">
+        <i class="fa fa-twitter"></i>
+      </a>
+      <a class="button" id="tumblr-quote" title="Post this quote on tumblr!" target="_blank">
+        <i class="fa fa-tumblr"></i>
+      </a>
+      <button class="button" id="new-quote">New quote</button>
+    </div>
+  </div>
+  <div class="footer"> by <a href="https://codepen.io/memorandum-tk/">Kosuke</a></div>
+
+</body>
+
+</html>
