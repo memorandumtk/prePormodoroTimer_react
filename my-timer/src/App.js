@@ -4,13 +4,14 @@ import { PauseBtnFill } from "react-bootstrap-icons";
 import { ArrowClockwise } from "react-bootstrap-icons";
 import { ArrowBarUp } from "react-bootstrap-icons";
 import { ArrowBarDown } from "react-bootstrap-icons";
-import audioFile from "./sound.mp3"
+const audioFile =
+  "https://github.com/memorandumtk/freecodecamp_react/raw/main/my-timer/src/sound.mp3";
+// import audioFile from "./sound.mp3"
 
 function App() {
   const [timerLength, setTimerLength] = useState(25);
   const [breakLength, setBreakLength] = useState(5);
   const [isBreak, setIsBreak] = useState(false);
-  // const [secondsLeft, setSecondsLeft] = useState(timerLength); //for test
   const [secondsLeft, setSecondsLeft] = useState(timerLength * 60);
   const [isActive, setIsActive] = useState(false);
   const [marginTimeLeft, setMarginTimeLeft] = useState(1); // New State for Margin Time
@@ -26,12 +27,12 @@ function App() {
     } else if (isActive && secondsLeft <= 0 && marginTimeLeft > 0) {
       // Check for Margin Time
       alarmSound.current.play();
-      interval = setInterval(() => {
-        setMarginTimeLeft(marginTimeLeft - 1);
-      }, 5000); // to keep sound to last 5 sec, interval value change from 1000 to 5000
+      // interval = setInterval(() => {
+      //   setMarginTimeLeft(marginTimeLeft - 1);
+      // }, 3000); // to keep sound to last 5 sec, interval value change from 1000 to 5000
     } else if (isActive && secondsLeft <= 0 && marginTimeLeft <= 0) {
       setIsBreak(!isBreak);
-      setSecondsLeft(isBreak ? timerLength : breakLength);
+      setSecondsLeft(isBreak ? timerLength * 60 : breakLength * 60);
       setMarginTimeLeft(1);
       alarmSound.current.pause();
       alarmSound.current.currentTime = 0;
@@ -53,22 +54,24 @@ function App() {
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const handleTimerChange = (delta) => {
-    if (!isActive && !isBreak) {
+    if (!isActive && timerLength >= 2 && timerLength <= 59) {
       setTimerLength((prev) => Math.max(1, prev + delta));
-      // if (!isBreak) setSecondsLeft(timerLength + delta); //for test
-      if (!isBreak) setSecondsLeft((timerLength + delta) * 60);
+      if (!isBreak && !(timerLength === 1 && delta === -1))
+        setSecondsLeft((timerLength + delta) * 60);
     }
   };
 
   const handleBreakChange = (delta) => {
-    if (!isActive && isBreak) {
+    if (!isActive && breakLength >= 2 && breakLength <= 59) {
       setBreakLength((prev) => Math.max(1, prev + delta));
-      // if (isBreak) setSecondsLeft(breakLength + delta); //for test
-      if (isBreak) setSecondsLeft((breakLength + delta) * 60);
+      if (isBreak && !(breakLength === 1 && delta === -1))
+        setSecondsLeft((breakLength + delta) * 60);
     }
   };
 
@@ -82,13 +85,13 @@ function App() {
             <p>Timer Length</p>
             <div className="row row-cols-3 mx-auto">
               <button
-                id="break-decrement"
+                id="session-decrement"
                 className="btn btn-secondary col"
                 onClick={() => handleTimerChange(-1)}
               >
                 <ArrowBarDown />
               </button>
-              <div id="session-length" className="timerLength col">
+              <div id="session-length" className="col">
                 {timerLength}
               </div>
               <button
@@ -111,7 +114,7 @@ function App() {
               >
                 <ArrowBarDown />
               </button>
-              <div id="break-length" className="breakLength col-4">
+              <div id="break-length" className="col-4">
                 {breakLength}
               </div>
               <button
@@ -134,8 +137,13 @@ function App() {
           >
             <p id="timer-label">{isBreak ? "Breaking" : "Working"}</p>
             <p id="time-left">{formatTime(secondsLeft)}</p>
-            <audio id="beep" ref={alarmSound} src={audioFile} preload="auto">
-            </audio>
+            <audio
+              id="beep"
+              ref={alarmSound}
+              src={audioFile}
+              preload="auto"
+              loop
+            ></audio>
           </div>
 
           <div id="timer-control">
@@ -147,13 +155,6 @@ function App() {
               <SkipStartBtnFill size={50} />
               <PauseBtnFill size={50} />
             </button>
-            {/* <button
-              className="btn btn-secondary"
-              value="pause"
-              onClick={() => setIsActive(false)}
-            >
-              <PauseBtnFill size={50} />
-            </button> */}
             <button
               id="reset"
               className="btn btn-secondary"
@@ -161,10 +162,10 @@ function App() {
               onClick={() => {
                 setIsActive(false);
                 setIsBreak(false);
-                setSecondsLeft(timerLength);
                 alarmSound.current.pause();
-                // for improving test, commented out
-                // setSecondsLeft(timerLength * 60);
+                setTimerLength(25);
+                setBreakLength(5);
+                setSecondsLeft(1500);
               }}
             >
               <ArrowClockwise size={50} />
