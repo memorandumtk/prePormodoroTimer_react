@@ -27,9 +27,9 @@ function App() {
     } else if (isActive && secondsLeft <= 0 && marginTimeLeft > 0) {
       // Check for Margin Time
       alarmSound.current.play();
-      // interval = setInterval(() => {
-      //   setMarginTimeLeft(marginTimeLeft - 1);
-      // }, 3000); // to keep sound to last 5 sec, interval value change from 1000 to 5000
+      interval = setInterval(() => {
+        setMarginTimeLeft(marginTimeLeft - 1);
+      }, 3000); // to keep sound to last 5 sec, interval value change from 1000 to 5000
     } else if (isActive && secondsLeft <= 0 && marginTimeLeft <= 0) {
       setIsBreak(!isBreak);
       setSecondsLeft(isBreak ? timerLength * 60 : breakLength * 60);
@@ -165,7 +165,7 @@ function App() {
                 alarmSound.current.pause();
                 setTimerLength(25);
                 setBreakLength(5);
-                setSecondsLeft(1500);
+                setSecondsLeft(timerLength);
               }}
             >
               <ArrowClockwise size={50} />
